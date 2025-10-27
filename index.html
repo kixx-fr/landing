@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Kixx — Landing sobre et premium</title>
+  <meta name="description" content="Tout est réuni pour un max de performances et de style. Livraison rapide – Qualité 100% legit." />
+  <meta http-equiv="refresh" content="5;url=https://kixx.fr">
+
+  <style>
+    body{margin:0;font-family:Inter, sans-serif;background:#0f1724;color:#e6eef6;display:flex;justify-content:center;align-items:center;height:100vh;text-align:center}
+    .container{padding:30px;background:#0b1220;border-radius:20px;max-width:400px;width:90%;box-shadow:0 10px 30px rgba(0,0,0,0.5)}
+    h1{font-size:24px;margin-bottom:12px}
+    p{color:#9aa4b2;margin-bottom:20px}
+    .payments{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:20px}
+    
+    /* MODIFICATION CLÉ 1: Rendre toutes les images responsives par défaut */
+    img {
+        max-width: 100%; /* S'assurer que l'image ne dépasse pas la largeur de son conteneur */
+        height: auto;    /* Conserver le ratio de l'image */
+        display: block;  /* Pour une meilleure gestion des marges et largeurs */
+    }
+    
+    /* ANCIENNE RÈGLE pour les images de paiement. On ajuste pour la responsivité */
+    .payments img{
+        max-height: 64px; /* Hauteur maximale pour les logos de paiement */
+        width: auto;      /* La largeur s'ajuste pour conserver le ratio */
+        object-fit: contain;
+        display: inline-block;
+    }
+    
+    /* NOUVELLE RÈGLE pour agrandir l'image de crédit */
+    .payments .credit-logo {
+        max-height: 80px; /* Augmentation de la hauteur maximale pour agrandir l'image */
+        width: auto;      /* IMPORTANT: S'assurer que la largeur s'ajuste */
+    }
+    
+    .timer{font-size:18px;color:#ff5a1f;margin-top:12px}
+    .logo-container{width:86px;height:86px;margin:0 auto 18px;border-radius:14px;overflow:hidden}
+    
+    /* MODIFICATION CLÉ 2: Supprimer le 'display: block' ici car on l'a mis sur 'img' général */
+    .logo-container img{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="logo-container">
+      <img src="assets/logo-kixx.png" alt="Kixx">
+    </div>
+
+    <h1>Tout est réuni pour un max de performances et de style.</h1>
+    <p>Chargement de la boutique.<br>Redirection automatique. 🔥</p>
+    <p>Livraison rapide – Qualité 100 % legit.<br>Affirme ton style. Joue ton jeu. 🏀🔥</p>
+	
+
+    <div class="timer" id="countdown">Redirection automatique dans 5 secondes...</div>
+
+    <div class="payments" id="payments-logos">
+      <img src="assets/paypal.png" alt="PayPal">
+      <img src="assets/sumup.png" alt="SumUp">
+      <img src="assets/cb.png" alt="Carte Bancaire">
+      <img src="assets/googlepay.png" alt="Google Pay">
+	  <img src="assets/credit.png" alt="credit" class="credit-logo"> </div>
+  </div>
+
+  <script>
+    // TIMER + redirection JS
+    let seconds = 5;
+    const countdownEl = document.getElementById('countdown');
+    const redirectUrl = 'https://shop.kixx.fr';
+
+    const timer = setInterval(() => {
+      seconds--;
+      countdownEl.textContent = `Redirection automatique dans ${seconds} seconde${seconds>1?'s':''}...`;
+      if (seconds <= 0) {
+        clearInterval(timer);
+        window.location.href = redirectUrl;
+      }
+    }, 1000);
+  </script>
+</body>
+</html>
