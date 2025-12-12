@@ -3,86 +3,299 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Kixx.fr</title>
+  <title>Kixx - Joyeuses Fêtes !</title>
   <meta name="description" content="Tout est réuni pour un max de performances et de style. Livraison rapide – Qualité 100% legit." />
-  <meta http-equiv="refresh" content="5;url=https://kixx.fr">
+  <meta http-equiv="refresh" content="10;url=https://shop.kixx.fr">
 
   <style>
-    body{margin:0;font-family:Inter, sans-serif;background:#0f1724;color:#e6eef6;display:flex;justify-content:center;align-items:center;height:100vh;text-align:center}
-    .container{padding:30px;background:#0b1220;border-radius:20px;max-width:400px;width:90%;box-shadow:0 10px 30px rgba(0,0,0,0.5)}
-    h1{font-size:24px;margin-bottom:12px}
-    p{color:#9aa4b2;margin-bottom:20px}
-    .payments{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:20px}
+    /* === STYLES NOËL === */
     
-    /* MODIFICATION CLÉ 1: Rendre toutes les images responsives par défaut */
-    img {
-        max-width: 100%; /* S'assurer que l'image ne dépasse pas la largeur de son conteneur */
-        height: auto;    /* Conserver le ratio de l'image */
-        display: block;  /* Pour une meilleure gestion des marges et largeurs */
+    html {
+        background: #0d4232; 
+        overflow-x: hidden; 
+    }
+
+    body {
+        margin: 0;
+        font-family: Inter, sans-serif;
+        background: transparent; 
+        color: #f7f7f7; 
+        display: flex;
+        justify-content: center;
+        align-items: flex-start; /* Ancrage en HAUT */
+        min-height: 100vh;
+        padding: 10px 0; /* Padding vertical minimum */
+        box-sizing: border-box;
+        text-align: center;
+        position: relative; 
     }
     
-    /* ANCIENNE RÈGLE pour les images de paiement. On ajuste pour la responsivité */
-    .payments img{
-        max-height: 64px; /* Hauteur maximale pour les logos de paiement */
-        width: auto;      /* La largeur s'ajuste pour conserver le ratio */
-        object-fit: contain;
-        display: inline-block;
+    /* --- Arrière-Plan Sapin --- */
+    .christmas-tree {
+        position: fixed; bottom: -50px; left: 50%;
+        transform: translateX(-50%); width: 100vw; height: 100vh;
+        background: radial-gradient(circle at 50% 100%, #004d40 0%, transparent 60%); 
+        opacity: 0.25; z-index: -2; pointer-events: none;
+    }
+
+    /* Effet "chute de neige" */
+    body::before {
+        content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10"><circle cx="5" cy="5" r="2" fill="#e0f0ff"/></svg>') repeat; 
+        background-size: 50px 50px; animation: snowfall 18s linear infinite;
+        opacity: 0.9; pointer-events: none; z-index: -1;
+    }
+    body::after {
+        content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="5" height="5"><circle cx="2.5" cy="2.5" r="1" fill="#f7f7f7"/></svg>') repeat;
+        background-size: 30px 30px; animation: snowfall 12s linear infinite; animation-delay: -3s;
+        opacity: 0.7; pointer-events: none; z-index: -1;
+    }
+    @keyframes snowfall {
+        0% { background-position: 0% 0%; }
+        100% { background-position: 500px 1500px; } 
+    }
+
+    .container {
+        /* CORRECTION N°1 : Padding encore réduit */
+        padding: 12px 15px 10px 15px; 
+        background: #990000; 
+        border-radius: 25px; 
+        max-width: 450px; 
+        width: 95%; 
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+        border: 5px solid #ffcc00; 
+        position: relative; 
+        
+        /* Blocage de la hauteur */
+        max-height: 98vh;
+        overflow-y: auto; /* Sécurité au cas où */
+    }
+
+    h1 {
+        font-size: 24px; 
+        margin-bottom: 8px; 
+        color: #ffcc00; 
+    }
+
+    p {
+        color: #f7f7f7; 
+        margin-bottom: 8px; /* CORRECTION : Marge réduite */
+        font-weight: 500;
+        line-height: 1.4; 
+    }
+
+    /* --- STYLES TIMER/BOUTON --- */
+    .timer {
+        font-size: 18px; 
+        color: #ffcc00; 
+        margin-top: 8px; 
+        font-weight: bold;
+    }
+
+    #start-button {
+        background: #ffcc00; color: #990000; border: 3px solid #ffcc00;
+        padding: 10px 20px; 
+        font-size: 1.1em; font-weight: bold;
+        border-radius: 12px; cursor: pointer;
+        box-shadow: 0 0 15px rgba(255, 204, 0, 0.7);
+        transition: all 0.3s;
+        margin-top: 8px; 
+        width: 100%; display: block; 
+    }
+    #start-button:hover {
+        background: #f7f7f7; color: #0f4c3a; 
+        box-shadow: 0 0 25px #f7f7f7; transform: scale(1.03);
+    }
+
+    /* === GESTION DE LA LIGNE DE PAIEMENT === */
+    .payments {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap; 
+        gap: 2px; /* CORRECTION : Espace minimum */
+        margin-top: 8px; /* CORRECTION : Marge réduite */
+        padding-bottom: 5px; 
+    }
+
+    .payments img {
+        height: auto; max-width: 100%; object-fit: contain;
+        display: block; padding: 3px; border-radius: 8px; /* CORRECTION : Padding réduit */
+        border: 2px solid #ffcc00; 
+        margin: 2px 0; /* CORRECTION : Marge réduite */
+    }
+
+    /* CORRECTION N°2 : Tailles des logos finale */
+    .paypal-logo, .sumup-logo { 
+        max-height: 42px; /* Était 45px */
+        width: auto;
     }
     
-    /* NOUVELLE RÈGLE pour agrandir l'image de crédit */
-    .payments .credit-logo {
-        max-height: 80px; /* Augmentation de la hauteur maximale pour agrandir l'image */
-        width: auto;      /* IMPORTANT: S'assurer que la largeur s'ajuste */
+    .payments .cards-line {
+        width: 100%; display: block; 
+        background: #f7f7f7; border-radius: 8px;
+        padding: 5px; /* CORRECTION : Padding réduit */
+        margin: 2px 0; /* CORRECTION : Marge réduite */
+        border: 2px solid #ffcc00;
+    }
+
+    .cards-line img {
+        border: none;
+        max-height: 28px; /* CORRECTION : Hauteur réduite (était 30px) */
+        width: 100%; object-fit: contain; 
+        padding: 0; margin: 0;
     }
     
-    .timer{font-size:18px;color:#ff5a1f;margin-top:12px}
-    .logo-container{width:86px;height:86px;margin:0 auto 18px;border-radius:14px;overflow:hidden}
-    
-    /* MODIFICATION CLÉ 2: Supprimer le 'display: block' ici car on l'a mis sur 'img' général */
-    .logo-container img{
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
+    .google-pay-block {
+        width: 100%; display: flex; flex-direction: column;
+        align-items: center;
+        margin: 2px 0; /* CORRECTION : Marge réduite */
+    }
+    .google-pay-block img {
+        background: #f7f7f7; 
+        max-height: 42px; /* CORRECTION : Hauteur réduite (était 45px) */
+        border: 2px solid #ffcc00;
+        margin-bottom: 5px;
+    }
+    /* FIN CORRECTIONS TAILLE LOGOS */
+
+    .credit-text-box {
+        background: #000; color: #f7f7f7;
+        padding: 6px; 
+        font-size: 0.65em; 
+        line-height: 1.4;
+        border-radius: 4px; border: 1px solid #ffcc00;
+        width: 80%; max-width: 250px;
+        margin: 0 auto; text-align: left;
+    }
+
+    .logo-container {
+        width: 65px; height: 65px; /* CORRECTION : Taille réduite */
+        margin: 0 auto 8px; 
+        border-radius: 50%; overflow: hidden;
+        border: 4px solid #ffcc00;
+        box-shadow: 0 0 15px rgba(255, 204, 0, 0.8);
+    }
+    .logo-container img {
+        width: 100%; height: 100%;
+        object-fit: cover; display: block;
+    }
+
+    /* === ANIMATION PAYPAL (Pulsation) === */
+    .paypal-logo {
+        animation: pulse 1.5s infinite;
+        background: #f7f7f7; 
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 204, 0, 0.7); }
+      70% { transform: scale(1.1); box-shadow: 0 0 0 15px rgba(255, 204, 0, 0); }
+      100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 204, 0, 0); }
     }
     
+    /* === ANIMATION TEXTE (TRÈS VISIBLE) === */
+    .pulsing-text {
+        display: inline-block; color: #ffcc00; 
+        font-size: 1.1em; 
+        animation: textPulse 1s infinite alternate;
+        font-weight: 700; transition: all 0.5s; 
+    }
+    @keyframes textPulse {
+        from {
+            text-shadow: 0 0 8px #ffcc00, 0 0 15px #ffcc00, 0 0 25px rgba(255, 204, 0, 0.6);
+            transform: scale(1); opacity: 0.9;
+        }
+        to {
+            text-shadow: 0 0 20px #ffcc00, 0 0 35px #ffcc00, 0 0 60px rgba(255, 204, 0, 1);
+            transform: scale(1.05); opacity: 1;
+        }
+    }
   </style>
 </head>
 <body>
+    <audio id="christmas-music" src="assets/jingle-bells.mp3" loop preload="auto"></audio>
+    <div class="christmas-tree"></div> 
+
   <div class="container">
     <div class="logo-container">
       <img src="assets/logo-kixx.png" alt="Kixx">
     </div>
 
-    <h1>Tout est réuni pour un max de performances et de style.</h1>
-    <p>Chargement de la boutique.<br>Redirection automatique. 🔥</p>
-    <p>Livraison rapide – Qualité 100 % legit.<br>Affirme ton style. Joue ton jeu. 🏀🔥</p>
-	
+    <h1>Joyeuses Fêtes ! 🎁 </h1>
+    
+    <p>Chaussures Basketball & Sneakers .<br><span class="pulsing-text">Livraison Gratuite 48h – Qualité 100 % Authentique.🎅🏾</span></p>
 
-    <div class="timer" id="countdown">Redirection automatique dans 5 secondes...</div>
+    <div id="action-area">
+        <button id="start-button"></button>
+        <div class="timer" id="countdown" style="display: none;"></div>
+    </div>
 
     <div class="payments" id="payments-logos">
-      <img src="assets/paypal.png" alt="PayPal">
-      <img src="assets/sumup.png" alt="SumUp">
-      <img src="assets/cb.png" alt="Carte Bancaire">
-      <img src="assets/googlepay.png" alt="Google Pay">
-	  <img src="assets/credit.png" alt="credit" class="credit-logo"> </div>
+      
+      <img src="assets/paypal.png" alt="PayPal" class="paypal-logo"> 
+      
+      <img src="assets/sumup.png" alt="SumUp" class="sumup-logo">
+      
+      <div class="cards-line">
+         <img src="assets/amex.png" alt="Cartes de paiement acceptées">
+      </div>
+
+      <div class="google-pay-block">
+        <img src="assets/googlepay.png" alt="Google Pay">
+        <div class="credit-text-box">
+            *Un crédit vous engage et doit être remboursé<br>
+            vérifiez vos capacités de remboursement avant de vous engager<br>
+            *Code consommation - Article L312-5
+        </div>
+      </div>
+      
+    </div>
   </div>
 
   <script>
-    // TIMER + redirection JS
-    let seconds = 5;
-    const countdownEl = document.getElementById('countdown');
-    const redirectUrl = 'https://shop.kixx.fr';
+    // ** PARAMÈTRE MODIFIABLE PAR LE BOSS **
+    let seconds = 3; 
+    const initialSeconds = seconds; 
+    // ************************************
 
-    const timer = setInterval(() => {
-      seconds--;
-      countdownEl.textContent = `Redirection automatique dans ${seconds} seconde${seconds>1?'s':''}...`;
-      if (seconds <= 0) {
-        clearInterval(timer);
-        window.location.href = redirectUrl;
-      }
-    }, 1000);
+    const countdownEl = document.getElementById('countdown');
+    const startButton = document.getElementById('start-button');
+    const music = document.getElementById('christmas-music');
+    const redirectUrl = 'https://shop.kixx.fr';
+    
+    function startRedirect() {
+        music.load();
+        music.muted = false;
+        music.volume = 0.5;
+        music.play().catch(error => {
+            console.log("Lecture audio bloquée (smartphone) :", error);
+        });
+        startButton.style.display = 'none';
+        countdownEl.style.display = 'block';
+        countdownEl.textContent = `Redirection automatique dans ${seconds} seconde${seconds>1?'s':''}...`;
+        const timer = setInterval(() => {
+            seconds--;
+            countdownEl.textContent = `Redirection automatique dans ${seconds} seconde${seconds>1?'s':''}...`;
+            if (seconds <= 0) {
+                clearInterval(timer);
+                music.pause();
+                window.location.href = redirectUrl;
+            }
+        }, 1000);
+    }
+    
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const metaRefresh = document.querySelector('meta[http-equiv="refresh"]');
+        if (metaRefresh) {
+            metaRefresh.setAttribute('content', `${initialSeconds};url=${redirectUrl}`);
+        }
+        
+        // CORRECTION N°3 : Texte du bouton raccourci pour ne pas passer sur 2 lignes
+        startButton.textContent = `Activer la magie de Noël (${initialSeconds}s) 🎶`;
+        
+        startButton.addEventListener('click', startRedirect);
+    });
+
   </script>
 </body>
-
 </html>
